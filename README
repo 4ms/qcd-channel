@@ -1,0 +1,15 @@
+QCD channel version 1.1
+
+This is for the Quad Clock Distributor from 4ms Company.
+The channel firmware runs on a tiny85 chip for each channel (four total chips).
+
+For the Tap button firmware, see the QCD tapper project
+
+
+CHANGELOG:
+
+version 1.1
+-added FREERUN setting to allow clock to run indefinitely
+
+version 1.0
+-initial release
