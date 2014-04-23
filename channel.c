@@ -9,16 +9,132 @@
     };
 */
 
-/***********************
- *  COMPILE SETTINGS   *
- ***********************/
+/********************
+ *  DIV/MULT VALUES *
+ ********************/
 
-//#define DEBUG
+/* 
+The Div/Mult pot has 21-detents, but the top and bottom positions are not usable. 
+Therefore we have 19 possible Division or Multiplication values. 
+These are stored as P_1, P_2, through P_19, with P1 being the lowest value (counter-clockwise) and P19 being the greatest value (clockwise). P10 is the center value (typically will be equal to 1, which is "=".
 
+Negative values represent multiplication (so -6 means x6)
+Positive values represent division (so 4 means /4)
+*/
+
+//#define DIVMULT_PRIME
+//#define DIVMULT_CARNATIC
+#define DIVMULT_MULTONLY
+//#define DIVMULT_FACTORY
+
+
+#if defined DIVMULT_PRIME
+//Prime numbers
+#define P_1 23
+#define P_2 19
+#define P_3 17
+#define P_4 13
+#define P_5 11
+#define P_6 7
+#define P_7 5
+#define P_8 3
+#define P_9 2
+#define P_10 1
+#define P_11 -2
+#define P_12 -3
+#define P_13 -5
+#define P_14 -7
+#define P_15 -11
+#define P_16 -13
+#define P_17 -17
+#define P_18 -19
+#define P_19 -23
+
+#elif defined DIVMULT_CARNATIC
+//Carnatic
+#define P_1 11
+#define P_2 9
+#define P_3 8
+#define P_4 7
+#define P_5 6
+#define P_6 5
+#define P_7 4
+#define P_8 3
+#define P_9 2
+#define P_10 1
+#define P_11 -2
+#define P_12 -3
+#define P_13 -4
+#define P_14 -5
+#define P_15 -6
+#define P_16 -7
+#define P_17 -8
+#define P_18 -9
+#define P_19 -11
+
+#elif defined DIVMULT_MULTONLY
+//Multiply Only
+#define P_1 1
+#define P_2 -2
+#define P_3 -3
+#define P_4 -4
+#define P_5 -5
+#define P_6 -6
+#define P_7 -7
+#define P_8 -8
+#define P_9 -9
+#define P_10 -10
+#define P_11 -11
+#define P_12 -12
+#define P_13 -13
+#define P_14 -14
+#define P_15 -15
+#define P_16 -16
+#define P_17 -17
+#define P_18 -18
+#define P_19 -19
+
+#else
+//Factory Default:
+#define P_1 32
+#define P_2 16
+#define P_3 8
+#define P_4 7
+#define P_5 6
+#define P_6 5
+#define P_7 4
+#define P_8 3
+#define P_9 2
+#define P_10 1
+#define P_11 -2
+#define P_12 -3
+#define P_13 -4
+#define P_14 -5
+#define P_15 -6
+#define P_16 -7
+#define P_17 -8
+#define P_18 -12
+#define P_19 -16
+
+#endif
+
+/*************
+ *  FREE RUN *
+ *************/
 
 // Set FREERUN to 1 to allow freerunning clock (output clock doesn't stop when incoming clock stops)
 // Set FREERUN to 0 to disable freerunning clock (output will stop when input stops)
-#define FREERUN 1
+// Factory default is 0
+
+#define FREERUN 0
+
+
+
+/*************
+ *  DEBUG    *
+ *************/
+//Uncomment the following to disable the Reset Pin and turn it into a Debug output pin
+//#define DEBUG
 
 
 /************************
@@ -161,44 +277,44 @@ void init_extinterrupt(void){
 }
 
 int8_t get_clk_div_nominal(uint8_t adc_val){
-	if (adc_val<=5) 	 // /32
-		return(32);
+	if (adc_val<=5) 	// /32
+		return(P_1);
 	else if (adc_val<=17) // /16
-		return(16);
+		return(P_2);
 	else if (adc_val<=33) // /8
-		return(8);
+		return(P_3);
 	else if (adc_val<=47) // /7
-		return(7);
+		return(P_4);
 	else if (adc_val<=62) // /6
-		return(6);
+		return(P_5);
 	else if (adc_val<=76) // /5
-		return(5);
+		return(P_6);
 	else if (adc_val<=90) // /4
-		return(4);
+		return(P_7);
 	else if (adc_val<=104) // /3
-		return(3);
+		return(P_8);
 	else if (adc_val<=118) // /2
-		return(2);
+		return(P_9);
 	else if (adc_val<=131) // =1
-		return(1);
+		return(P_10);
 	else if (adc_val<=144) // x2
-		return(-2);	
+		return(P_11);	
 	else if (adc_val<=158) // x3
-		return(-3);	
+		return(P_12);	
 	else if (adc_val<=172) // x4
-		return(-4);
+		return(P_13);
 	else if (adc_val<=186) // x5
-		return(-5);
+		return(P_14);
 	else if (adc_val<=200) // x6
-		return(-6);
+		return(P_15);
 	else if (adc_val<=215) // x7
-		return(-7);
+		return(P_16);
 	else if (adc_val<=229) // x8
-		return(-8);
+		return(P_17);
 	else if (adc_val<=242) // x12
-		return(-12);
-	else  					// x16
-		return(-16);
+		return(P_18);
+	else  			// x16
+		return(P_19);
 
 }
 uint32_t get_clk_div_time(int8_t clock_divide_amount, uint32_t clk_time){
@@ -209,50 +325,31 @@ uint32_t get_clk_div_time(int8_t clock_divide_amount, uint32_t clk_time){
 		return(clk_time<<5);
 	else if (clock_divide_amount==16) // /16
 		return(clk_time<<4);
-	else if (clock_divide_amount==12) // /12
-		return(clk_time*12);
 	else if (clock_divide_amount==8) // /8
 		return(clk_time<<3);
-	else if (clock_divide_amount==7) // /7
-		return(clk_time*7);
-	else if (clock_divide_amount==6) // /6
-		return(clk_time*6);
-	else if (clock_divide_amount==5) // /5
-		return(clk_time*5);
 	else if (clock_divide_amount==4) // /4
 		return(clk_time<<2);
-	else if (clock_divide_amount==3) // /3
-		return(clk_time*3);
 	else if (clock_divide_amount==2) // /2
 		return(clk_time<<1);
 	else if (clock_divide_amount==1) // =1
+		return(clk_time);
+	else if (clock_divide_amount==0) // =1
 		return(clk_time);
 	else if (clock_divide_amount==-1) // =1
 		return(clk_time);
 	else if (clock_divide_amount==-2) // *2
 		return(clk_time>>1);
-	else if (clock_divide_amount==-3) // *3
-		return(clk_time/3);
 	else if (clock_divide_amount==-4) // *4
 		return(clk_time>>2);
-	else if (clock_divide_amount==-5) // *5
-		return(clk_time/5);
-	else if (clock_divide_amount==-6) // *6
-		return(clk_time/6);
-	else if (clock_divide_amount==-7) // *7
-		return(clk_time/7);
 	else if (clock_divide_amount==-8) // *8
 		return(clk_time>>3);
-	else if (clock_divide_amount==-12) // *8
-		return(clk_time/12);
 	else if (clock_divide_amount==-16) // *16
 		return((clk_time>>4) + 100);
-	else if (clock_divide_amount==-32) // *32
-		return(clk_time>>5);
-	else if (clock_divide_amount==-64) // *64
-			return(clk_time>>6);
 		
-	else return(clk_time);
+	else if (clock_divide_amount<0)
+		return(clk_time/(-1*clock_divide_amount));
+	else //if (clock_divide_amount>0)
+		return(clk_time*clock_divide_amount);
 
 }
 
