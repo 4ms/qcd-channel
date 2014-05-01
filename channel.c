@@ -25,7 +25,8 @@ Positive values represent division (so 4 means /4)
 //#define DIVMULT_PRIME
 //#define DIVMULT_CARNATIC
 //#define DIVMULT_MULTONLY
-#define DIVMULT_FACTORY
+//#define DIVMULT_FACTORY
+#define DIVMULT_ODDS
 
 
 #if defined DIVMULT_PRIME
@@ -71,6 +72,28 @@ Positive values represent division (so 4 means /4)
 #define P_17 -8
 #define P_18 -9
 #define P_19 -11
+
+#elif defined DIVMULT_ODDS
+//Odds
+#define P_1 15
+#define P_2 13
+#define P_3 11
+#define P_4 9
+#define P_5 7
+#define P_6 5
+#define P_7 4
+#define P_8 3
+#define P_9 2
+#define P_10 1
+#define P_11 -2
+#define P_12 -3
+#define P_13 -4
+#define P_14 -5
+#define P_15 -7
+#define P_16 -9
+#define P_17 -11
+#define P_18 -13
+#define P_19 -15
 
 #elif defined DIVMULT_MULTONLY
 //Multiply Only
