@@ -25,8 +25,8 @@ Positive values represent division (so 4 means /4)
 //#define DIVMULT_PRIME
 //#define DIVMULT_CARNATIC
 //#define DIVMULT_MULTONLY
-//#define DIVMULT_FACTORY
-#define DIVMULT_ODDS
+//#define DIVMULT_ODDS
+#define DIVMULT_FACTORY
 
 
 #if defined DIVMULT_PRIME
