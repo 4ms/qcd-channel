@@ -414,8 +414,8 @@ int main(void){
 	int poll_user_input=0;
 
 	uint8_t reset_up=0,reset_now_flag=0,ready_to_reset=1;
-	uint8_t num_pings_since_reset[9]={0,0,0,0,0,0,0,0,0};
-	uint8_t cda[9]={2,3,4,5,6,7,8,16,32};
+	uint8_t num_pings_since_reset[19]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	uint8_t cda[19]={P_19,P_18,P_17,P_16,P_15,P_14,P_13,P_12,P_11,P_10,P_9,P_8,P_7,P_6,P_5,P_4,P_3,P_2,P_1};
 	uint8_t i;
 
 	uint8_t adch=127;
@@ -462,7 +462,7 @@ int main(void){
 				ready_to_reset=1;
 			}
 
-			for (i=0;i<9;i++){
+			for (i=0;i<19;i++){
 				num_pings_since_reset[i]++;
 				if (num_pings_since_reset[i]>=cda[i]){
 					if (clock_divide_amount==cda[i]) ready_to_reset=1;
@@ -479,7 +479,12 @@ int main(void){
 				num_pings_since_reset[2]=0;num_pings_since_reset[3]=0;
 				num_pings_since_reset[4]=0;num_pings_since_reset[5]=0;
 				num_pings_since_reset[6]=0;num_pings_since_reset[7]=0;
-				num_pings_since_reset[8]=0;		
+				num_pings_since_reset[8]=0;num_pings_since_reset[9]=0;
+				num_pings_since_reset[10]=0;num_pings_since_reset[11]=0;
+				num_pings_since_reset[12]=0;num_pings_since_reset[13]=0;
+				num_pings_since_reset[14]=0;num_pings_since_reset[15]=0;
+				num_pings_since_reset[16]=0;num_pings_since_reset[17]=0;
+				num_pings_since_reset[18]=0;num_pings_since_reset[19]=0;
 			}
 		}
 
@@ -491,7 +496,13 @@ int main(void){
 				num_pings_since_reset[2]=0;num_pings_since_reset[3]=0;
 				num_pings_since_reset[4]=0;num_pings_since_reset[5]=0;
 				num_pings_since_reset[6]=0;num_pings_since_reset[7]=0;
-				num_pings_since_reset[8]=0;	
+				num_pings_since_reset[8]=0;num_pings_since_reset[9]=0;
+				num_pings_since_reset[10]=0;num_pings_since_reset[11]=0;
+				num_pings_since_reset[12]=0;num_pings_since_reset[13]=0;
+				num_pings_since_reset[14]=0;num_pings_since_reset[15]=0;
+				num_pings_since_reset[16]=0;num_pings_since_reset[17]=0;
+				num_pings_since_reset[18]=0;num_pings_since_reset[19]=0;
+				
 				reset_offset_time=get_tmr_reset(); //time elapsed since last ping
 				reset_now_flag=1;
 				reset_up=1;
